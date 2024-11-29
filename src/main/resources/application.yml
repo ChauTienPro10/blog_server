@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    username: system
+    password: Tien22012003
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  secret: Lnk1z6qObGV7rKpyGnOP4pPTcyMQ6f2ksfw5ny5U5xcCwrY26hr4hd2cFk6rx6FbHtRrhckzT1AYQ6RpLMJ6F2xz1ASIk8qB
+  expiration: 86400000

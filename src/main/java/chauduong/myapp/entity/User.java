@@ -7,8 +7,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Builder;
 
 @Entity
@@ -21,7 +24,15 @@ public class User {
     private Long id;
 
     private String name;
+    @Column(name = "phone", unique = true)
+    private String phone;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Account account;
+
+
+
+
+
+
 }

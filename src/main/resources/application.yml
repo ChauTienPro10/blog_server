@@ -8,10 +8,15 @@ spring:
     password: Tien22012003
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
+    properties:
+      hibernate:
+#        generate_statistics: true
+#        format_sql: true
     database-platform: org.hibernate.dialect.OracleDialect
     show-sql: true
     hibernate:
       ddl-auto: update
+
 
 jwt:
   secret: Lnk1z6qObGV7rKpyGnOP4pPTcyMQ6f2ksfw5ny5U5xcCwrY26hr4hd2cFk6rx6FbHtRrhckzT1AYQ6RpLMJ6F2xz1ASIk8qB

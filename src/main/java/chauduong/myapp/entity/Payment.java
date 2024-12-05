@@ -8,7 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="payment_tb")
+@Table(name="PAYMENT_TB")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,15 +31,14 @@ public class Payment {
     @Column(name = "ID") // Tên cột trong bảng
     private Long id;
 
+    private LocalDateTime time;
+    private Integer state;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "ID")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="booking_id",referencedColumnName = "ID")
+    @OneToOne
+    @JoinColumn(name = "booking_id", referencedColumnName = "ID")
     private Booking booking;
-
-    private LocalDateTime time;
-    private Integer state; // chua thanh toan -1/ da thanh toan 1/ coc 50 % 0
-
 }

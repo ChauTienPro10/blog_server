@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,11 +31,13 @@ import lombok.Setter;
 @Setter
 public class Booking {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Sử dụng sequence hoặc auto-increment
-    @Column(name = "ID") // Tên cột trong bảng
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+    @SequenceGenerator(name = "booking_seq", sequenceName = "BOOKING_SEQ", allocationSize = 1)
+    @Column(name = "ID")
     private Long id;
     private LocalDateTime book_start;
     private LocalDateTime book_end;
+    private boolean state;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -7,6 +7,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Collection;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,8 +20,10 @@ import io.jsonwebtoken.security.Keys;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
+
 public class JwtProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -42,16 +46,22 @@ public class JwtProvider {
                 .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                // Khi tạo token
+                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS512)
+
                 .compact();
     }
     public Claims parseToken(String token) {
-        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid JWT token", e);
+        }
     }
 
 
@@ -63,6 +73,7 @@ public class JwtProvider {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             // If there is any exception during parsing, token is invalid
+            System.out.println(e.toString());
             return false;
         }
     }

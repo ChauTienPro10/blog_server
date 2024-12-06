@@ -1,9 +1,9 @@
 package chauduong.myapp.customs;
 
 import java.util.Collection;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 public class CustomUserDetails implements UserDetails {
 
     private String username;
@@ -16,6 +16,7 @@ public class CustomUserDetails implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
+    public CustomUserDetails(){}
 
     // Implement the methods from UserDetails interface
     @Override

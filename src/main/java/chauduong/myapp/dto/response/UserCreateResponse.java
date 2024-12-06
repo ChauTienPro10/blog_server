@@ -1,8 +1,7 @@
-package chauduong.myapp.dto.request;
+package chauduong.myapp.dto.response;
 
 import chauduong.myapp.entity.Role;
 import java.util.List;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,14 +9,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class UserCreateRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserCreateResponse {
     private String name;
     private String phone;
-    private String username;
-    private String password;
-    private String[] roles;
+    private List<Role> roles;
+
 }
